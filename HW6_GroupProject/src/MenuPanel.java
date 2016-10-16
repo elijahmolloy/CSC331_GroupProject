@@ -45,6 +45,7 @@ public class MenuPanel extends JPanel
 	private int columns;
 	
 	private JLabel photoLabel;
+	private ArrayList<ImageJPanel> imgpanels;
 	
 	/**
 	 * Constructor for MenuPanel()
@@ -100,7 +101,7 @@ public class MenuPanel extends JPanel
 		pageStart_subPanel.setLayout(new GridLayout(2, 3, 5, 5));
 		
 		// Options for the below JComboBoxes
-		String[] optionOne = {"Add/Subtract", "Multiply/Divide"};
+		String[] optionOne = {"Add", "Subtract"};
 		String[] optionTwo = {"2x2", "3x3", "4x4"};
 		String[] optionThree = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 		
@@ -170,7 +171,14 @@ public class MenuPanel extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				// scroll Left through images ArrayList
-				imageCount = (imageCount - 1) % 3;
+				if (imageCount == 2 || imageCount == 1)
+				{
+					imageCount = (imageCount - 1) % 3;
+				}
+				else
+				{
+					imageCount = 2;
+				}
 				photoLabel.setIcon(new ImageIcon(images.get(imageCount)));
 			}
 		});
@@ -213,6 +221,7 @@ public class MenuPanel extends JPanel
 			{
 				// scroll right through images Arraylist
 				imageCount = (imageCount + 1) % 3;
+				System.out.println(imageCount);
 				photoLabel.setIcon(new ImageIcon(images.get(imageCount)));
 			}
 		});
@@ -246,6 +255,8 @@ public class MenuPanel extends JPanel
 	
 	public void startGame()
 	{
+		imgpanels = new ArrayList<ImageJPanel>();
+		
 		if (secondOption.equals("2x2"))
 		{
 			rows = 2;
@@ -274,7 +285,8 @@ public class MenuPanel extends JPanel
 				double widthStart = photoLabel.getWidth() * (j - 1);
 				double widthEnd = photoLabel.getWidth() * j;
 				
-				// ImageIcon newImg = photoLabel.getSubImage((int)widthStart, (int)heightStart)
+				BufferedImage tempImage = images.get(imageCount).getSubimage((int)widthStart, (int)heightStart, (int)widthEnd, (int)heightEnd);
+				imgpanels.add(new ImageJPanel(tempImage));
 			}
 		}
 	}

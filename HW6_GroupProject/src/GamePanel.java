@@ -17,12 +17,14 @@ public class GamePanel extends JPanel
 	private int correctGuesses;
 	private int totalGuesses;
 	
-	private ImageIcon image;
 	private ArrayList<ImageIcon> splitImages;
+	private ArrayList<ImageJPanel> imageList = new ArrayList<ImageJPanel>();
+	private JPanel imagePanel;
 	
 	
-	public GamePanel(ArrayList<ImageJButton> imageList)
+	public GamePanel(ArrayList<ImageJPanel> imageList, int rows, int columns)
 	{
+		this.imageList = imageList;
 		setLayout(new BorderLayout());
 		
 		setup_PageStart();
@@ -34,7 +36,7 @@ public class GamePanel extends JPanel
 	public void setup_PageStart()
 	{
 		JPanel pageStart_subPanel = new JPanel();
-		pageStart_subPanel.setLayout(new GridLayout(2, 3, 5, 5));
+		pageStart_subPanel.setLayout(new GridLayout(2, 3, 3, 3));
 		
 		JLabel time = new JLabel("Time");
 		JLabel numberCorrectGuesses = new JLabel("Number Correct Guesses");
@@ -57,7 +59,16 @@ public class GamePanel extends JPanel
 	
 	public void setup_Center()
 	{		
-		// Code that will set up 2x2, 3x3, or 4x4 split picture to display on 
+		// Code that will set up 2x2, 3x3, or 4x4 split picture to display on
+		JPanel center_subPanel = new JPanel();
+		center_subPanel.setLayout(new GridLayout(rows, columns, 2, 2));
+		
+		for (int i = 0; i < imageList.size(); i++)
+		{
+			center_subPanel.add(imageList.get(i));
+		}
+		
+		add(center_subPanel);
 	}
 	
 	
